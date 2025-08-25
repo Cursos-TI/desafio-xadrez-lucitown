@@ -56,7 +56,7 @@ void bispo(){
         switch (movimento_bispo){
         case 1: {
                 int i = 1;
-                while (i <= 5) { //aqui ele vai apenar imprimir o nome do movimento 
+                while (i <= 5) { //aqui ele vai apenas imprimir o nome do movimento 
                     printf("bispo %d: Cima, Direita\n", i);
                     i++;
                     usleep(300000); 
