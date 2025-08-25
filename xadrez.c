@@ -3,164 +3,123 @@
 #include <unistd.h>  
 
 
+void torreHorizontal(int movimento, int casas) {
+    if (casas == 0) return; //condição de parada da função
+    printf("Direita\n");  // Movimento para a direita
+    torreHorizontal(movimento, casas - 1);  // Chamada recursiva para o próximo movimento
+}
+
+void torreVertical(int movimento, int casas) {
+    if (casas == 0) return;
+    printf("Baixo\n");  // Movimento para baixo
+    torreVertical(movimento, casas - 1);  // Chamada recursiva para o próximo movimento
+}
+
 void torre() {
-    int movimento_torre; //ok, acredito que não fiz exatamente como era pra ser a torre. Mas acho que no pedido não tava explicito
-    do{                  //que eu deveria fazer o movimento usando as palavras "esquerda". Bom, corrigirei isso caso necessário, mas 
-        printf("0.voltar ao menu principal.\n"); //ficou interessante do jeito que tá.
-        printf("1. Mover na horizontal.\n");
-        printf("2. Mover na vertical.\n");
-        scanf("%d", &movimento_torre);
-        switch (movimento_torre) {
-        case 1: {
-            int i, width = 5;
-                for (i = 0; i < width; i++) {
-                    system("cls"); //apagar a posição anterior  
-                    printf("Direita.\n");
-                    for (int j = 0; j < i; j++) {  
-                        printf("\n");
-                    }
-                    printf("*\n");
-                    usleep(300000); // isso aqui é pra não fazer o movimento muito rápido
-                }
+    int movimento_torre, casas;
+    printf("Digite o número de casas para mover a Torre: ");
+    scanf("%d", &casas);
+    printf("1. Mover na horizontal.\n");
+    printf("2. Mover na vertical.\n");
+    scanf("%d", &movimento_torre);
+    
+    switch (movimento_torre) {
+    case 1:
+        torreHorizontal(movimento_torre, casas);
         break;
-        }        
-        case 2:{
-            int i, height = 5;
-                for (i=0; i<height; i++){
-                    printf("Baixo.\n");
-                    system("cls");
-                    for (int j = 0; j < i;j++){
-                        printf("\n");
-                    }
-                    printf("*\n");
-                    usleep(300000);
-                }
+    case 2:
+        torreVertical(movimento_torre, casas);
         break;
-        }
-        case 0:                
-            printf("Voltando ao menu principal...\n");
-            break;
-        default:
+    default:
+        printf("Opção inválida.\n");
         break;
     }
-    }while (movimento_torre != 0);
-    }
+}
+
+void bispoVertical(int casas); //declaração da função recursiva
+void bispoHorizontal(int casas);
+
+void bispo() {
+    int casas;
+    printf("Digite o número de casas para mover o Bispo: ");
+    scanf("%d", &casas);
+    bispoVertical(casas);  // Inicia o movimento diagonal com a função recursiva
+}
+
+// Função recursiva para o movimento vertical
+void bispoVertical(int casas) {
+    if (casas == 0) return;
+    printf("Cima\n");  // Movimento para cima (diagonal)
+    bispoHorizontal(casas - 1);  // Chamada recursiva para o movimento horizontal
+}
+
+// Função recursiva para o movimento horizontal
+void bispoHorizontal(int casas) {
+    if (casas == 0) return;
+    printf("Direita\n");  // Movimento para a direita (diagonal)
+    bispoVertical(casas - 1);  // Chamada recursiva para o movimento vertical
+}
 
 
-void bispo(){
-    int movimento_bispo;
-    do{
-        printf("0.voltar ao menu principal.\n");
-        printf("1. Mover na diagonal.\n");
-        scanf("%d", &movimento_bispo);
-        switch (movimento_bispo){
-        case 1: {
-                int i = 1;
-                while (i <= 5) { //aqui ele vai apenas imprimir o nome do movimento 
-                    printf("bispo %d: Cima, Direita\n", i);
-                    i++;
-                    usleep(300000); 
-                }
-                break;
-            }
-        default:
-        break;
-    }
-    }while(movimento_bispo != 0);
+void rainhaHorizontal(int casas) {
+    if (casas == 0) return;
+    printf("Esquerda\n");  // Movimento para a esquerda
+    rainhaHorizontal(casas - 1);  // Chamada recursiva para o próximo movimento
+}
+
+void rainhaVertical(int casas) {
+    if (casas == 0) return;
+    printf("Baixo\n");  // Movimento para baixo
+    rainhaVertical(casas - 1);  // Chamada recursiva para o próximo movimento
 }
 
 void rainha() {
-    int i, tamanho = 8;  // Tamanho do movimento (tabuleiro de 8 casas para exemplo)
-
-    // Imprime a linha em branco para separar do movimento das outras peças
-    printf("\n");
-
-    // Movimento horizontal para a esquerda (sem quebra de linha)
-    for (i = 0; i < tamanho; i++) {
-        system("cls");
-        for (int j = 0; j < tamanho - i - 1; j++) {  // Criando espaços antes do asterisco
-            printf(" ");
-        }
-        printf("*");  // A peça se move para a esquerda
-        usleep(300000);
+    int movimento_rainha, casas;
+    printf("Digite o número de casas para mover a Rainha: ");
+    scanf("%d", &casas);
+    printf("1. Mover na horizontal.\n");
+    printf("2. Mover na vertical.\n");
+    scanf("%d", &movimento_rainha);
+    
+    switch (movimento_rainha) {
+    case 1:
+        rainhaHorizontal(casas);  // Movimento horizontal para a esquerda
+        break;
+    case 2:
+        rainhaVertical(casas);  // Movimento vertical para baixo
+        break;
+    default:
+        printf("Opção inválida.\n");
+        break;
     }
-    //como não foi pedido essa parte aqui, vou comentar ela
-    /* 
-    // Movimento horizontal (direita)
-    for (i = 0; i < tamanho; i++) {
-        system("cls");
-        for (int j = 0; j < i; j++) {
-            printf(" ");
-        }
-        printf("*\n");
-        usleep(100000);
-    }
-
-    // Movimento vertical (baixo)
-    for (i = 0; i < tamanho; i++) {
-        system("cls");
-        for (int j = 0; j < tamanho; j++) {
-            if (j == i) {
-                printf("*\n");
-            } else {
-                printf(" ");
-            }
-        }
-        usleep(100000);
-    }
-
-    // Movimento diagonal (diagonal: Cima, Direita)
-    for (i = 0; i < tamanho; i++) {
-        system("cls");
-        for (int j = 0; j < i; j++) {
-            printf(" ");
-        }
-        printf("*\n");
-        usleep(100000);
-    }
-
-    // Movimento diagonal (diagonal: Baixo, Esquerda)
-    for (i = 0; i < tamanho; i++) {
-        system("cls");
-        for (int j = tamanho - 1; j >= i; j--) {
-            printf(" ");
-        }
-        printf("*\n");
-        usleep(100000);
-    }
-    */
 }
-
 
 void cavalo() {
-    int i, movimentos_horizontais = 1, movimentos_verticais = 2;
-    
-    // Imprime a linha em branco para separar do movimento das outras peças
-    printf("\n"); //acho que imprimir vários "_" poderia separar melhor visualmente, vou testar isso no futuro, inclusive usando algum for/while/do-while
+    int i, j;
+    int movimentos_verticais = 2;
+    int movimentos_horizontais = 1;
 
-    // Loop aninhado: primeiro o movimento horizontal e depois o vertical
-    for (i = 0; i < movimentos_horizontais; i++) {
-        // Movimento horizontal: Esquerda
-        printf("Esquerda\n");
-
-        // Loop interno (do-while) para o movimento vertical: Baixo
-        int j = 0;
-        do {
-            printf("Baixo\n");
-            j++;
-        } while (j < movimentos_verticais);
+    // Imprimir o movimento do Cavalo
+    for (i = 0; i < movimentos_verticais; i++) {
+        for (j = 0; j < movimentos_horizontais; j++) {
+            if (i == 0) {
+                printf("Cima\n");  // Movimento para cima
+            } else {
+                printf("Direita\n");  // Movimento para a direita
+            }
+        }
     }
 }
-
 
 int main() {
     int xadrez;
     do{
         printf("Menu\n");
-        printf("1.Torre\n");
-        printf("2.Bispo\n");
-        printf("3.Rainha\n");
-        printf("4.Cavalo\n");
+        printf("1. Torre\n");
+        printf("2. Bispo\n");
+        printf("3. Rainha\n");
+        printf("4. Cavalo\n");
+        printf("5. Sair do jogo");
         printf("Escolha uma opção\n");
         scanf("%d", &xadrez);
         switch (xadrez){
